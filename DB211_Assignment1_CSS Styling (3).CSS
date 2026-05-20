@@ -1,0 +1,144 @@
+your_group_number/         <-- Main folder (e.g., group1)
+│
+├── index.html
+├── about.html
+├── feedback.html
+├── (other html files)     <-- No subfolders allowed for HTML [cite: 38]
+│
+├── style.css              <-- The ONLY CSS file allowed 
+└── images/                <-- All images go here
+
+/* ==========================================================================
+   1. GLOBAL & RESET STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* ==========================================================================
+   2. FLUID STRUCTURAL LAYOUT
+   ========================================================================== */
+header, nav, article, footer {
+    width: 100%; /* Makes structural components span fluidly */
+    padding: 1.5%;
+}
+
+article {
+    max-width: 1200px;  /* Prevents content from stretching too wide on huge monitors */
+    width: 90%;         /* Fluid width for smaller screens */
+    margin: 20px auto;  /* Centers the primary content block */
+    background: #ffffff;
+}
+
+/* ==========================================================================
+   3. HEADER & MENU STYLES
+   ========================================================================== */
+header {
+    background-color: #2c3e50;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Unordered list styling for navigation */
+nav {
+    background-color: #34495e;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;          /* Use modern flexbox for a fluid navigation row */
+    flex-wrap: wrap;        /* Allows items to wrap on mobile devices */
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 8px 16px;
+    transition: background 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #1abc9c;
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   4. FORM STYLING (feedback.html)
+   ========================================================================== */
+/* The assignment states a <table> must be used to structure the form */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+fieldset {
+    border: 2px solid #bdc3c7;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #2c3e50;
+}
+
+input[type="text"], input[type="date"], textarea, select {
+    width: 100%; /* Makes inputs expand fluidly to their table cells */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   5. IMAGES & RESPONSIVENESS
+   ========================================================================== */
+img {
+    max-width: 100%; /* Ensures images never overflow their container */
+    height: auto;    /* Maintains original aspect ratio */
+    display: block;
+    margin: 10px auto;
+}
+
+/* ==========================================================================
+   6. FOOTER STYLES
+   ========================================================================== */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 40px;
+}
+
+footer a {
+    color: #1abc9c;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
