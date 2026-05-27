@@ -6,303 +6,183 @@
     <title>TechWorld Chatbot</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; min-height: 100vh; }
-
-        .chat-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #4a90d9, #357abd);
-            border-radius: 50%;
+        body {
+            font-family: Arial, sans-serif;
+            background: #e8e8e8;
             display: flex;
-            align-items: center;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(74,144,217,0.4);
-            z-index: 1000;
-            transition: transform 0.3s;
+            align-items: center;
+            min-height: 100vh;
         }
-        .chat-btn:hover { transform: scale(1.1); }
-        .chat-btn svg { width: 28px; height: 28px; fill: #fff; }
-
-        .chat-window {
-            position: fixed;
-            bottom: 100px;
-            right: 25px;
-            width: 370px;
-            height: 500px;
+        #chatbox {
+            width: 380px;
+            height: 520px;
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            display: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            display: flex;
             flex-direction: column;
-            z-index: 1000;
             overflow: hidden;
         }
-        .chat-window.active { display: flex; }
-
-        .chat-header {
-            background: linear-gradient(135deg, #4a90d9, #357abd);
-            color: #fff;
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .chat-header .avatar {
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #chatbox-header {
+            background: #4a90d9;
+            color: white;
+            padding: 15px 20px;
             font-size: 18px;
+            font-weight: bold;
         }
-        .chat-header-info h3 { font-size: 15px; }
-        .chat-header-info p { font-size: 12px; opacity: 0.85; }
-        .chat-close {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 22px;
-            cursor: pointer;
+        #chatbox-header span {
+            font-size: 12px;
+            font-weight: normal;
+            opacity: 0.8;
+            display: block;
+            margin-top: 3px;
         }
-
-        .chat-messages {
+        #messages {
             flex: 1;
-            overflow-y: auto;
             padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            overflow-y: auto;
         }
-        .message {
-            max-width: 80%;
+        .msg {
+            margin-bottom: 12px;
             padding: 10px 14px;
-            border-radius: 12px;
+            border-radius: 10px;
+            max-width: 75%;
             font-size: 14px;
             line-height: 1.4;
+            clear: both;
         }
-        .message.bot {
-            align-self: flex-start;
-            background: #f0f2f5;
+        .bot-msg {
+            background: #f1f1f1;
             color: #333;
-            border-bottom-left-radius: 4px;
+            float: left;
         }
-        .message.user {
-            align-self: flex-end;
+        .user-msg {
             background: #4a90d9;
-            color: #fff;
-            border-bottom-right-radius: 4px;
+            color: white;
+            float: right;
         }
-        .typing {
-            align-self: flex-start;
-            background: #f0f2f5;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            color: #999;
-        }
-
-        .chat-input {
+        .clearfix { clear: both; }
+        #input-area {
             display: flex;
-            padding: 12px;
-            border-top: 1px solid #e0e0e0;
-            gap: 8px;
+            border-top: 1px solid #ddd;
+            padding: 10px;
         }
-        .chat-input input {
+        #user-input {
             flex: 1;
-            padding: 10px 14px;
+            padding: 10px 15px;
             border: 1px solid #ddd;
             border-radius: 20px;
             font-size: 14px;
             outline: none;
         }
-        .chat-input input:focus { border-color: #4a90d9; }
-        .chat-input button {
-            width: 38px;
-            height: 38px;
+        #send-btn {
+            margin-left: 8px;
+            padding: 10px 18px;
             background: #4a90d9;
+            color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 20px;
+            font-size: 14px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .chat-input button svg { width: 18px; height: 18px; fill: #fff; }
-
-        .quick-replies {
+        #send-btn:hover { background: #357abd; }
+        #suggestions {
+            padding: 8px 15px 12px;
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            padding: 0 15px 10px;
         }
-        .quick-replies button {
-            padding: 6px 12px;
+        .sug-btn {
+            padding: 5px 12px;
+            background: white;
             border: 1px solid #4a90d9;
-            background: #fff;
             color: #4a90d9;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 12px;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .quick-replies button:hover {
-            background: #4a90d9;
-            color: #fff;
-        }
-
-        @media (max-width: 420px) {
-            .chat-window { width: calc(100% - 20px); right: 10px; bottom: 90px; height: 60vh; }
-        }
+        .sug-btn:hover { background: #4a90d9; color: white; }
     </style>
 </head>
 <body>
-
-<!-- Chat Toggle Button -->
-<div class="chat-btn" onclick="toggleChat()">
-    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
-</div>
-
-<!-- Chat Window -->
-<div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <div class="avatar">🤖</div>
-        <div class="chat-header-info">
-            <h3>TechWorld Assistant</h3>
-            <p>Online • Typically replies instantly</p>
+    <div id="chatbox">
+        <div id="chatbox-header">
+            🤖 TechWorld Assistant
+            <span>Ask me anything about our store</span>
         </div>
-        <button class="chat-close" onclick="toggleChat()">✕</button>
+        <div id="messages"></div>
+        <div id="suggestions">
+            <button class="sug-btn" onclick="ask('Products')">Products</button>
+            <button class="sug-btn" onclick="ask('Shipping')">Shipping</button>
+            <button class="sug-btn" onclick="ask('Returns')">Returns</button>
+            <button class="sug-btn" onclick="ask('Contact')">Contact</button>
+            <button class="sug-btn" onclick="ask('Payment')">Payment</button>
+        </div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Type your question...">
+            <button id="send-btn" onclick="send()">Send</button>
+        </div>
     </div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="quick-replies" id="quickReplies"></div>
-    <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
-        <button onclick="sendMessage()">
-            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
-    </div>
-</div>
 
-<script>
-const responses = {
-    "hello": "Hi there! 👋 Welcome to TechWorld. How can I help you today?",
-    "hi": "Hey! 👋 How can I assist you today?",
-    "hey": "Hello! What can I help you with?",
-    "products": "We sell a range of tech products including laptops, phones, headphones, and accessories. Check out our <a href='products.html'>Products page</a>!",
-    "shipping": "We offer free shipping on orders over $50. Standard delivery takes 3-5 business days.",
-    "delivery": "Standard delivery is 3-5 business days. Express shipping (1-2 days) is available for $9.99.",
-    "return": "We have a 30-day return policy. Items must be unused and in original packaging. Visit our store or contact support.",
-    "refund": "Refunds are processed within 5-7 business days after we receive the returned item.",
-    "payment": "We accept Visa, MasterCard, PayPal, and Apple Pay. All transactions are secured with SSL encryption.",
-    "contact": "You can reach us at support@techworld.com or call us at (555) 123-4567. We're available Mon-Fri, 9am-6pm.",
-    "hours": "Our support team is available Monday to Friday, 9:00 AM - 6:00 PM (EST).",
-    "cart": "You can view your cart by clicking <a href='cart.html'>here</a>. Add items from the Products page!",
-    "discount": "Sign up for our newsletter to get 10% off your first order! We also run seasonal sales.",
-    "warranty": "All our products come with a 1-year manufacturer warranty. Extended warranties are available at checkout.",
-    "track": "To track your order, check your email for the tracking link sent after purchase, or contact our support team.",
-    "thanks": "You're welcome! 😊 Is there anything else I can help you with?",
-    "thank you": "Happy to help! Let me know if you need anything else.",
-    "bye": "Goodbye! Thanks for visiting TechWorld. Have a great day! 👋",
-};
-
-const quickReplyOptions = ["Products", "Shipping", "Returns", "Contact", "Payment"];
-
-function toggleChat() {
-    const win = document.getElementById('chatWindow');
-    win.classList.toggle('active');
-    if (win.classList.contains('active') && document.getElementById('chatMessages').children.length === 0) {
-        addBotMessage("Hi! 👋 I'm the TechWorld assistant. How can I help you today?");
-        showQuickReplies();
-    }
-}
-
-function showQuickReplies() {
-    const container = document.getElementById('quickReplies');
-    container.innerHTML = quickReplyOptions.map(q => 
-        `<button onclick="quickReply('${q}')">${q}</button>`
-    ).join('');
-}
-
-function quickReply(text) {
-    document.getElementById('quickReplies').innerHTML = '';
-    addUserMessage(text);
-    setTimeout(() => getBotResponse(text), 600);
-}
-
-function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const text = input.value.trim();
-    if (!text) return;
-    input.value = '';
-    document.getElementById('quickReplies').innerHTML = '';
-    addUserMessage(text);
-    showTyping();
-    setTimeout(() => {
-        removeTyping();
-        getBotResponse(text);
-    }, 800 + Math.random() * 500);
-}
-
-function addUserMessage(text) {
-    const div = document.createElement('div');
-    div.className = 'message user';
-    div.textContent = text;
-    document.getElementById('chatMessages').appendChild(div);
-    scrollToBottom();
-}
-
-function addBotMessage(html) {
-    const div = document.createElement('div');
-    div.className = 'message bot';
-    div.innerHTML = html;
-    document.getElementById('chatMessages').appendChild(div);
-    scrollToBottom();
-}
-
-function showTyping() {
-    const div = document.createElement('div');
-    div.className = 'typing';
-    div.id = 'typingIndicator';
-    div.textContent = 'Typing...';
-    document.getElementById('chatMessages').appendChild(div);
-    scrollToBottom();
-}
-
-function removeTyping() {
-    const el = document.getElementById('typingIndicator');
-    if (el) el.remove();
-}
-
-function getBotResponse(input) {
-    const lower = input.toLowerCase();
-    let reply = null;
-
-    for (const [key, value] of Object.entries(responses)) {
-        if (lower.includes(key)) {
-            reply = value;
-            break;
+    <script>
+        function getResponse(text) {
+            var t = text.toLowerCase();
+            if (t.match(/hi|hello|hey|hola/)) return "Hi there! 👋 Welcome to TechWorld. How can I help you?";
+            if (t.match(/product|shop|buy|sell|item|laptop|phone/)) return "We sell laptops, phones, headphones & accessories. Visit our Products page to browse!";
+            if (t.match(/ship|deliver/)) return "Free shipping on orders over $50! Standard: 3-5 days. Express: 1-2 days for $9.99.";
+            if (t.match(/return|refund|exchange/)) return "30-day return policy. Items must be unused & in original packaging. Refunds in 5-7 days.";
+            if (t.match(/pay|card|visa|paypal/)) return "We accept Visa, MasterCard, PayPal & Apple Pay. All transactions are SSL secured.";
+            if (t.match(/contact|email|phone|call|support/)) return "Email: support@techworld.com | Phone: (555) 123-4567 | Mon-Fri 9am-6pm EST.";
+            if (t.match(/cart|basket|order/)) return "Check your cart on the Cart page. Add items from the Products page!";
+            if (t.match(/discount|coupon|sale|deal/)) return "Sign up for our newsletter for 10% off your first order! Seasonal sales available.";
+            if (t.match(/warranty|guarantee/)) return "All products include 1-year warranty. Extended warranties available at checkout.";
+            if (t.match(/track|status|where/)) return "Check your email for the tracking link, or contact support for help.";
+            if (t.match(/price|cost|how much|expensive/)) return "Prices vary by product. Check our Products page for current pricing!";
+            if (t.match(/signup|sign up|register|account/)) return "Create an account on our Sign Up page - takes just a minute!";
+            if (t.match(/feedback|review/)) return "We'd love your feedback! Visit our Feedback page.";
+            if (t.match(/about|team|who/)) return "Learn about our team on the About Us page!";
+            if (t.match(/thank|thx/)) return "You're welcome! 😊 Anything else I can help with?";
+            if (t.match(/bye|goodbye/)) return "Goodbye! Have a great day! 👋";
+            return "I'm not sure about that. Try asking about: products, shipping, returns, payments, or contact info!";
         }
-    }
 
-    if (!reply) {
-        reply = "I'm not sure about that, but I'd be happy to help! You can ask me about our products, shipping, returns, payments, or contact info. Or reach our team at support@techworld.com.";
-    }
+        function addMsg(text, isUser) {
+            var div = document.createElement("div");
+            div.className = "msg " + (isUser ? "user-msg" : "bot-msg");
+            div.textContent = text;
+            var clear = document.createElement("div");
+            clear.className = "clearfix";
+            var msgs = document.getElementById("messages");
+            msgs.appendChild(div);
+            msgs.appendChild(clear);
+            msgs.scrollTop = msgs.scrollHeight;
+        }
 
-    addBotMessage(reply);
-    setTimeout(showQuickReplies, 300);
-}
+        function send() {
+            var input = document.getElementById("user-input");
+            var text = input.value.trim();
+            if (text === "") return;
+            input.value = "";
+            addMsg(text, true);
+            setTimeout(function() {
+                addMsg(getResponse(text), false);
+            }, 500);
+        }
 
-function scrollToBottom() {
-    const msgs = document.getElementById('chatMessages');
-    msgs.scrollTop = msgs.scrollHeight;
-}
-</script>
+        function ask(text) {
+            addMsg(text, true);
+            setTimeout(function() {
+                addMsg(getResponse(text), false);
+            }, 500);
+        }
 
+        document.getElementById("user-input").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") send();
+        });
+
+        // Welcome message
+        addMsg("Hi! I'm the TechWorld assistant. Ask me about products, shipping, returns, or anything else!", false);
+    </script>
 </body>
 </html>
