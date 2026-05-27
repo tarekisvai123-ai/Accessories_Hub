@@ -1,36 +1,37 @@
-// cart.js - add to site root and include <script src="cart.js"></script> before </body> on every page
+// cart.js - LuxAccessories Shopping Cart
 (function () {
   const STORAGE_KEY = 'lux_cart';
   const ORDERS_KEY = 'lux_orders';
 
-  // Helpers
   function getCart() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-    catch { return []; }
+    catch (e) { return []; }
   }
   function saveCart(cart) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
     updateCartBadge();
   }
   function formatCurrency(n) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+    return 'USD ' + Number(n).toFixed(2);
   }
 
-  // Adds item (object: {title, price, img, qty})
   function addToCart(item) {
-    const cart = getCart();
-    const index = cart.findIndex(i => i.title === item.title);
+    var cart = getCart();
+    var index = -1;
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].title === item.title) { index = i; break; }
+    }
     if (index > -1) {
       cart[index].qty = (cart[index].qty || 1) + (item.qty || 1);
     } else {
       cart.push({ title: item.title, price: Number(item.price || 0), img: item.img || '', qty: item.qty || 1 });
     }
     saveCart(cart);
-    showToast(`${item.title} added to cart`);
+    showToast(item.title + ' added to cart');
   }
 
   function removeFromCart(index) {
-    const cart = getCart();
+    var cart = getCart();
     if (index >= 0 && index < cart.length) {
       cart.splice(index, 1);
       saveCart(cart);
@@ -38,7 +39,7 @@
   }
 
   function updateQuantity(index, qty) {
-    const cart = getCart();
+    var cart = getCart();
     if (index >= 0 && index < cart.length) {
       cart[index].qty = Math.max(1, Number(qty) || 1);
       saveCart(cart);
@@ -51,269 +52,200 @@
   }
 
   function getCartCount() {
-    return getCart().reduce((s, it) => s + (Number(it.qty) || 0), 0);
+    var cart = getCart();
+    var count = 0;
+    for (var i = 0; i < cart.length; i++) {
+      count += Number(cart[i].qty) || 0;
+    }
+    return count;
   }
 
-  // Header cart badge
   function updateCartBadge() {
-    const badge = document.getElementById('cart-count');
+    var badge = document.getElementById('cart-count');
     if (badge) badge.textContent = getCartCount();
   }
 
-  // Toast
-  let toastTimer;
+  var toastTimer;
   function showToast(text) {
-    let el = document.getElementById('lux-toast');
+    var el = document.getElementById('lux-toast');
     if (!el) {
       el = document.createElement('div');
       el.id = 'lux-toast';
-      el.style.position = 'fixed';
-      el.style.right = '18px';
-      el.style.bottom = '18px';
-      el.style.background = '#1a1a2e';
-      el.style.color = '#fff';
-      el.style.padding = '12px 16px';
-      el.style.borderRadius = '10px';
-      el.style.boxShadow = '0 6px 18px rgba(0,0,0,0.4)';
-      el.style.zIndex = 9999;
+      el.style.cssText = 'position:fixed;right:18px;bottom:18px;background:linear-gradient(135deg,#1a2a4a,#2a3a5a);color:#fff;padding:14px 20px;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.5);z-index:9999;font-size:14px;border:1px solid rgba(74,111,165,0.4);transition:opacity 0.3s;';
       document.body.appendChild(el);
     }
     el.textContent = text;
     el.style.opacity = '1';
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { el.style.opacity = '0'; }, 2400);
+    toastTimer = setTimeout(function () { el.style.opacity = '0'; }, 2400);
   }
 
-  // Render cart page (cart.html) - call renderCartPage() if present
   function renderCartPage() {
-    if (!document.getElementById('cart-root')) return;
-    const root = document.getElementById('cart-root');
-    const cart = getCart();
+    var root = document.getElementById('cart-root');
+    if (!root) return;
+    var cart = getCart();
     root.innerHTML = '';
+
     if (!cart.length) {
-      root.innerHTML = '<p>Your cart is empty. <a href="index.html">Continue shopping</a>.</p>';
+      root.innerHTML = '<div style="text-align:center;padding:40px 0;"><p style="color:#aaa;font-size:16px;margin-bottom:16px;">Your cart is empty.</p><a href="accessories.html" class="btn">Continue Shopping</a></div>';
       updateCartBadge();
       return;
     }
-    const table = document.createElement('table');
-    table.style.width = '100%';
-    table.className = 'cart-table';
-    const tbody = document.createElement('tbody');
 
-    let total = 0;
-    cart.forEach((item, i) => {
-      const tr = document.createElement('tr');
-      tr.style.verticalAlign = 'middle';
-
-      // image
-      const tdImg = document.createElement('td');
-      tdImg.style.width = '100px';
-      const img = document.createElement('img');
-      img.src = item.img || '';
-      img.alt = item.title;
-      img.style.width = '80px';
-      img.style.height = '80px';
-      img.style.objectFit = 'cover';
-      img.onerror = function () { this.style.display = 'none'; };
-      tdImg.appendChild(img);
-      tr.appendChild(tdImg);
-
-      // title
-      const tdTitle = document.createElement('td');
-      tdTitle.textContent = item.title;
-      tr.appendChild(tdTitle);
-
-      // qty
-      const tdQty = document.createElement('td');
-      const input = document.createElement('input');
-      input.type = 'number';
-      input.min = 1;
-      input.value = item.qty;
-      input.style.width = '70px';
-      input.addEventListener('change', function () {
-        updateQuantity(i, this.value);
-        renderCartPage();
-      });
-      tdQty.appendChild(input);
-      tr.appendChild(tdQty);
-
-      // price
-      const tdPrice = document.createElement('td');
-      const linePrice = (Number(item.price || 0) * Number(item.qty || 1));
-      tdPrice.textContent = formatCurrency(linePrice);
-      tr.appendChild(tdPrice);
-
-      // remove
-      const tdRemove = document.createElement('td');
-      const btn = document.createElement('button');
-      btn.className = 'btn';
-      btn.textContent = 'Remove';
-      btn.addEventListener('click', function () {
-        removeFromCart(i);
-        renderCartPage();
-      });
-      tdRemove.appendChild(btn);
-      tr.appendChild(tdRemove);
-
-      tbody.appendChild(tr);
-
+    var total = 0;
+    var html = '<div class="cart-items">';
+    for (var i = 0; i < cart.length; i++) {
+      var item = cart[i];
+      var linePrice = Number(item.price || 0) * Number(item.qty || 1);
       total += linePrice;
+      html += '<div class="cart-item" style="display:flex;align-items:center;gap:16px;padding:16px;background:#1a1a2e;border-radius:12px;margin-bottom:12px;border:1px solid rgba(74,111,165,0.15);">';
+      html += '<img src="' + (item.img || '') + '" alt="' + item.title + '" style="width:70px;height:70px;object-fit:cover;border-radius:8px;background:#2a2a3e;" onerror="this.style.display=\'none\'">';
+      html += '<div style="flex:1;"><h3 style="font-size:15px;color:#fff;margin-bottom:4px;">' + item.title + '</h3><p style="font-size:13px;color:#7ca4e0;">' + formatCurrency(item.price) + ' each</p></div>';
+      html += '<div style="display:flex;align-items:center;gap:8px;">';
+      html += '<button class="qty-btn" data-action="minus" data-index="' + i + '" style="width:30px;height:30px;border-radius:50%;border:1px solid #4a6fa5;background:transparent;color:#fff;cursor:pointer;font-size:16px;">-</button>';
+      html += '<span style="color:#fff;min-width:24px;text-align:center;">' + item.qty + '</span>';
+      html += '<button class="qty-btn" data-action="plus" data-index="' + i + '" style="width:30px;height:30px;border-radius:50%;border:1px solid #4a6fa5;background:transparent;color:#fff;cursor:pointer;font-size:16px;">+</button>';
+      html += '</div>';
+      html += '<div style="min-width:80px;text-align:right;color:#fff;font-weight:600;">' + formatCurrency(linePrice) + '</div>';
+      html += '<button class="remove-btn" data-index="' + i + '" style="background:none;border:none;color:#e55;cursor:pointer;font-size:18px;padding:4px 8px;" title="Remove">&times;</button>';
+      html += '</div>';
+    }
+    html += '</div>';
+
+    html += '<div style="margin-top:20px;padding:20px;background:#1a1a2e;border-radius:12px;border:1px solid rgba(74,111,165,0.15);">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;">';
+    html += '<span style="color:#aaa;font-size:16px;">Total (' + getCartCount() + ' items)</span>';
+    html += '<span style="color:#fff;font-size:22px;font-weight:700;">' + formatCurrency(total) + '</span>';
+    html += '</div>';
+    html += '<div style="display:flex;gap:12px;margin-top:16px;justify-content:flex-end;">';
+    html += '<button id="clearCartBtn" class="btn" style="background:#333;color:#ccc;">Clear Cart</button>';
+    html += '<a href="checkout.html" class="btn">Checkout</a>';
+    html += '</div></div>';
+
+    root.innerHTML = html;
+
+    // Attach event listeners
+    root.querySelectorAll('.qty-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = Number(this.dataset.index);
+        var action = this.dataset.action;
+        var cart = getCart();
+        if (action === 'plus') {
+          updateQuantity(idx, cart[idx].qty + 1);
+        } else {
+          if (cart[idx].qty <= 1) { removeFromCart(idx); }
+          else { updateQuantity(idx, cart[idx].qty - 1); }
+        }
+        renderCartPage();
+      });
     });
 
-    table.appendChild(tbody);
-    root.appendChild(table);
-
-    const totalDiv = document.createElement('div');
-    totalDiv.style.marginTop = '18px';
-    totalDiv.innerHTML = `<strong>Total: ${formatCurrency(total)}</strong>`;
-    root.appendChild(totalDiv);
-
-    const actions = document.createElement('div');
-    actions.style.marginTop = '12px';
-    const clearBtn = document.createElement('button');
-    clearBtn.className = 'btn btn-secondary';
-    clearBtn.textContent = 'Clear Cart';
-    clearBtn.addEventListener('click', function () {
-      if (confirm('Clear cart?')) { clearCart(); renderCartPage(); }
+    root.querySelectorAll('.remove-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        removeFromCart(Number(this.dataset.index));
+        renderCartPage();
+      });
     });
-    actions.appendChild(clearBtn);
 
-    const checkoutBtn = document.createElement('a');
-    checkoutBtn.className = 'btn';
-    checkoutBtn.href = 'checkout.html';
-    checkoutBtn.style.marginLeft = '12px';
-    checkoutBtn.textContent = 'Proceed to Checkout';
-    actions.appendChild(checkoutBtn);
-
-    root.appendChild(actions);
+    var clearBtn = document.getElementById('clearCartBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        if (confirm('Clear entire cart?')) { clearCart(); renderCartPage(); }
+      });
+    }
 
     updateCartBadge();
   }
 
-  // Render order confirmation (checkout.html) if present
   function renderCheckoutPage() {
-    const root = document.getElementById('checkout-root');
+    var root = document.getElementById('checkout-root');
     if (!root) return;
-    const cart = getCart();
+    var cart = getCart();
     if (!cart.length) {
-      root.innerHTML = '<p>Your cart is empty. Please add items before checking out.<br><a href="index.html">Shop now</a></p>';
+      root.innerHTML = '<p style="color:#aaa;">Your cart is empty. <a href="accessories.html" style="color:#7ca4e0;">Shop now</a></p>';
       return;
     }
-    // Show a summary inside the page and the checkout form remains below
-    const summary = document.createElement('div');
-    summary.innerHTML = '<h3>Order summary</h3>';
-    const ul = document.createElement('ul');
-    cart.forEach(it => {
-      const li = document.createElement('li');
-      li.textContent = `${it.title} — ${it.qty} × ${formatCurrency(it.price)} = ${formatCurrency(it.qty * it.price)}`;
-      ul.appendChild(li);
-    });
-    summary.appendChild(ul);
-    const total = cart.reduce((s, it) => s + (it.price * it.qty), 0);
-    const t = document.createElement('p');
-    t.innerHTML = `<strong>Total: ${formatCurrency(total)}</strong>`;
-    summary.appendChild(t);
-    root.appendChild(summary);
+    var total = 0;
+    var html = '<h3 style="margin-bottom:12px;">Order Summary</h3><div style="margin-bottom:20px;">';
+    for (var i = 0; i < cart.length; i++) {
+      var item = cart[i];
+      var line = item.price * item.qty;
+      total += line;
+      html += '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(74,111,165,0.15);color:#ccc;">';
+      html += '<span>' + item.title + ' x' + item.qty + '</span><span>' + formatCurrency(line) + '</span></div>';
+    }
+    html += '<div style="display:flex;justify-content:space-between;padding:12px 0;color:#fff;font-weight:700;font-size:16px;"><span>Total</span><span>' + formatCurrency(total) + '</span></div>';
+    html += '</div>';
+    root.innerHTML = html;
 
-    // form handling
-    const form = document.getElementById('checkoutForm');
+    var form = document.getElementById('checkoutForm');
     if (!form) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      const formData = new FormData(form);
-      const order = {
+      var formData = new FormData(form);
+      var order = {
         id: 'ORD-' + Date.now(),
         date: new Date().toISOString(),
-        customer: {
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          address: formData.get('address'),
-        },
+        customer: { name: formData.get('name'), email: formData.get('email'), phone: formData.get('phone'), address: formData.get('address') },
         items: cart,
         total: total
       };
-      // save order to localStorage (simulated)
-      const orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
+      var orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
       orders.push(order);
       localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-      // clear cart
       clearCart();
-      // show confirmation
-      root.innerHTML = `<h2>Order placed</h2><p>Thank you, ${order.customer.name}. Your order ID: <strong>${order.id}</strong></p><p>Total: ${formatCurrency(order.total)}</p><p>A confirmation has been recorded locally (simulated).</p><p><a href="index.html">Return to shop</a></p>`;
+      document.querySelector('.main-content').innerHTML = '<div style="text-align:center;padding:40px;"><h2 style="color:#4caf50;">Order Placed!</h2><p style="color:#aaa;margin:12px 0;">Thank you, ' + order.customer.name + '.</p><p style="color:#fff;">Order ID: <strong>' + order.id + '</strong></p><p style="color:#7ca4e0;font-size:20px;margin:12px 0;">' + formatCurrency(order.total) + '</p><a href="index.html" class="btn" style="margin-top:16px;">Return to Shop</a></div>';
     });
   }
 
-  // Auto-add UI: add Add-to-cart button to each product-card and add header cart link
   function attachButtons() {
-    // add cart link to header auth area
-    const authAreas = document.querySelectorAll('.auth-links');
-    authAreas.forEach(area => {
+    // Add cart link to header
+    var authAreas = document.querySelectorAll('.auth-links');
+    authAreas.forEach(function (area) {
       if (area.querySelector('#cart-link')) return;
-      const a = document.createElement('a');
+      var a = document.createElement('a');
       a.href = 'cart.html';
       a.id = 'cart-link';
-      a.style.color = '#7ca4e0';
-      a.style.marginLeft = '8px';
+      a.style.cssText = 'color:#7ca4e0;margin-left:8px;text-decoration:none;padding:8px 14px;border-radius:16px;border:1px solid #4a6fa5;';
       a.innerHTML = 'Cart (<span id="cart-count">0</span>)';
       area.appendChild(a);
     });
-
     updateCartBadge();
 
-    // Add buttons to product cards
-    document.querySelectorAll('.product-card').forEach(card => {
-      if (card.querySelector('.add-to-cart')) return; // don't duplicate
-      const titleEl = card.querySelector('span');
-      const title = titleEl ? titleEl.textContent.trim() : (card.dataset.title || 'Product');
-      // find last .price if present
-      const priceEls = card.querySelectorAll('.price');
-      let priceText = priceEls.length ? priceEls[priceEls.length - 1].textContent : '';
-      if (!priceText) {
-        const sp = card.querySelector('span.price');
-        priceText = sp ? sp.textContent : '';
-      }
-      const price = parseFloat(priceText.replace(/[^0-9.-]+/g, '')) || 0;
-      const img = card.querySelector('img') ? card.querySelector('img').src : '';
+    // Add buttons to product cards (but NOT on cart page)
+    if (document.getElementById('cart-root')) return;
 
-      const btn = document.createElement('button');
+    document.querySelectorAll('.product-card').forEach(function (card) {
+      if (card.querySelector('.add-to-cart')) return;
+      var spans = card.querySelectorAll('span');
+      var title = spans.length ? spans[0].textContent.trim() : 'Product';
+      var priceEl = card.querySelector('.price');
+      var priceText = priceEl ? priceEl.textContent : '';
+      var price = parseFloat(priceText.replace(/[^0-9.-]+/g, '')) || 0;
+      var imgEl = card.querySelector('img');
+      var img = imgEl ? imgEl.src : '';
+
+      var btn = document.createElement('button');
       btn.className = 'btn add-to-cart';
-      btn.style.marginTop = '8px';
+      btn.style.cssText = 'margin-top:8px;padding:8px 16px;font-size:12px;';
       btn.textContent = 'Add to Cart';
       btn.addEventListener('click', function (evt) {
         evt.preventDefault();
-        addToCart({ title, price, img, qty: 1 });
+        evt.stopPropagation();
+        addToCart({ title: title, price: price, img: img, qty: 1 });
       });
       card.appendChild(btn);
     });
-
-    // Hook modal Add-to-Cart if modal exists
-    const modalAddBtn = document.querySelector('#productModal .btn');
-    if (modalAddBtn) {
-      // remove existing onclick to avoid conflict
-      modalAddBtn.onclick = null;
-      modalAddBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        const title = document.getElementById('modalTitle') ? document.getElementById('modalTitle').textContent.trim() : 'Product';
-        const priceText = document.getElementById('modalPrice') ? document.getElementById('modalPrice').textContent.trim() : '';
-        const price = parseFloat((priceText || '').replace(/[^0-9.-]+/g, '')) || 0;
-        const img = document.getElementById('modalImg') ? document.getElementById('modalImg').src : '';
-        addToCart({ title, price, img, qty: 1 });
-        // close modal if there is a closeModal function
-        if (typeof closeModal === 'function') closeModal();
-      });
-    }
   }
 
-  // On DOM ready
+  // Init
   document.addEventListener('DOMContentLoaded', function () {
     attachButtons();
     updateCartBadge();
-    // render pages if present
     renderCartPage();
     renderCheckoutPage();
   });
 
-  // Expose addToCart for other inline scripts
+  // Expose globally
   window.luxAddToCart = addToCart;
 })();
