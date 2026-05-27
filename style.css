@@ -35,7 +35,7 @@ body {
 .site-nav a:hover, .site-nav a.active { background: rgba(124,164,224,0.15); color: #a8ccff; }
 /* Dropdown */
 .dropdown { position: relative; }
-.dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: #1a1a2e; border: 1px solid #4a6fa5; border-radius: 12px; min-width: 160px; box-shadow: 0 4px 20px rgba(74,111,165,0.2); z-index: 100; overflow: hidden; }
+.dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: #1a1a2e; border: 1px solid #4a6fa5; border-radius: 12px; min-width: 160px; box-shadow: 0 4px 20px rgba(74,111,165,0.2); z-index: 100; overflow: hidden; flex-direction: column; gap: 0; padding: 8px 0; }
 .dropdown:hover .dropdown-content,
 .dropdown.open .dropdown-content { display: block; }
 .dropdown-content li { list-style: none; }
