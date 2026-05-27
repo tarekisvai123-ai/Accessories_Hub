@@ -1,35 +1,102 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Login - LuxAccessories"><title>Login - LuxAccessories</title><link rel="stylesheet" href="style.css"></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Log in to LuxAccessories">
+  <title>Log In - LuxAccessories</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .login-box { max-width: 400px; margin: 40px auto; background: linear-gradient(145deg, #1a1a2e, #12122a); border: 1px solid rgba(74,111,165,0.3); border-radius: 20px; padding: 40px 32px; text-align: center; }
+    .login-box h1 { font-size: 26px; margin-bottom: 8px; }
+    .login-box .subtitle { color: #aaa; font-size: 14px; margin-bottom: 28px; }
+    .login-field { margin-bottom: 18px; text-align: left; }
+    .login-field label { display: block; color: #a8ccff; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    .login-field input { width: 100%; padding: 12px 16px; border-radius: 10px; background: #0d0d1a; color: #fff; border: 1px solid rgba(74,111,165,0.4); font-size: 14px; }
+    .login-field input:focus { outline: none; border-color: #7ca4e0; box-shadow: 0 0 0 3px rgba(124,164,224,0.15); }
+    .login-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 13px; }
+    .login-options label { color: #ccc; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .login-options a { color: #7ca4e0; text-decoration: none; }
+    .login-btn { width: 100%; padding: 14px; border-radius: 24px; background: linear-gradient(135deg,#b8c8e8,#7ca4e0); color: #0d0d1a; font-weight: 700; font-size: 15px; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.3s; }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124,164,224,0.4); }
+    .divider { margin: 24px 0; color: #555; font-size: 12px; position: relative; }
+    .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: rgba(74,111,165,0.3); }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .signup-link { margin-top: 20px; color: #aaa; font-size: 14px; }
+    .signup-link a { color: #7ca4e0; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="site-wrapper">
-  <header class="site-header"><div class="header-top"><a class="logo" href="index.html">LuxAccessories</a><input class="search-bar" type="search" placeholder="Search..."></div><nav class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="accessories.html">Accessories</a></li><li><a href="offers.html">Offers</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="feedback.html">Feedback</a></li></ul></nav></header>
-
+  <header class="site-header">
+    <div class="header-top">
+      <a class="logo" href="index.html">LuxAccessories</a>
+      <input class="search-bar" type="search" placeholder="Search accessories...">
+      <div class="auth-links"><a href="signup.html">Sign Up</a><a href="login.html">Log In</a></div>
+    </div>
+    <nav class="site-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown"><a href="accessories.html">Accessories ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="accessories.html#glasses">Glasses</a></li>
+          <li><a href="accessories.html#watches">Watches</a></li>
+          <li><a href="accessories.html#rings">Rings</a></li>
+          <li><a href="accessories.html#chains">Chains</a></li>
+          <li><a href="accessories.html#bags">Bags</a></li>
+        </ul>
+      </li>
+      <li><a href="offers.html">Offers</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+    </ul></nav>
+  </header>
   <main id="main-content" class="main-content">
-    <article>
-      <div class="form-page">
-        <h2>Welcome Back</h2>
-        <form id="loginForm" onsubmit="return handleLogin(event)">
-          <table class="form-table">
-            <tr><td><label for="login-email">Email *</label></td><td><input id="login-email" type="email" required></td></tr>
-            <tr><td><label for="login-password">Password *</label></td><td><input id="login-password" type="password" minlength="6" required></td></tr>
-          </table>
-          <div class="form-buttons"><button type="submit" class="btn">Log In</button></div>
-        </form>
-
-        <div id="login-success" class="success-msg"><p>Logged in — redirecting...</p></div>
-      </div>
-    </article>
+    <div class="login-box">
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Sign in to access your account</p>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="login-field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="login-field">
+          <label for="pass">Password</label>
+          <input type="password" id="pass" placeholder="Enter your password" required>
+        </div>
+        <div class="login-options">
+          <label><input type="checkbox" style="width:auto;"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button type="submit" class="login-btn">Sign In</button>
+      </form>
+      <div class="divider">or</div>
+      <p class="signup-link">Don't have an account? <a href="signup.html">Create one</a></p>
+    </div>
+    <div id="loginSuccess" style="display:none;max-width:400px;margin:16px auto;padding:16px;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);border-radius:12px;text-align:center;color:#4caf50;font-weight:600;">
+      Login successful! Redirecting...
+    </div>
   </main>
-
-  <footer class="site-footer"><div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div><p>&copy; Group_5 | Last updated: 27 May 2026</p></footer>
+  <footer class="site-footer">
+    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div>
+    <p>&copy; Group_5 | Last updated: 27 May 2026</p>
+  </footer>
 </div>
-
 <script>
 function handleLogin(e){
   e.preventDefault();
-  document.getElementById('loginForm').style.display='none';
-  document.getElementById('login-success').style.display='block';
-  setTimeout(()=>location.href='index.html',1500);
-  return false;
+  document.getElementById('loginSuccess').style.display='block';
+  setTimeout(function(){ window.location.href='index.html'; },1500);
 }
+document.querySelectorAll('.dropdown').forEach(function(drop){
+  drop.addEventListener('click', function(e){ this.classList.toggle('open'); });
+});
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.dropdown')){
+    document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
+  }
+});
 </script>
-</body></html>
+</body>
+</html>
