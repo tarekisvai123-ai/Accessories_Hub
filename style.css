@@ -30,7 +30,8 @@ body {
 .auth-links a { color: #7ca4e0; text-decoration: none; padding: 8px 14px; border-radius: 16px; border: 1px solid #4a6fa5; margin-left: 6px; transition: background 0.3s, color 0.3s; }
 .auth-links a:hover { background: #4a6fa5; color: #fff; }
 /* NAV */
-.site-nav ul { list-style: none; display: flex; gap: 6px; flex-wrap: wrap; padding-left: 0; margin: 0; }
+.site-nav > ul { list-style: none; display: flex; gap: 6px; flex-wrap: wrap; padding-left: 0; margin: 0; }
+.site-nav ul { list-style: none; padding-left: 0; margin: 0; }
 .site-nav a { color: #ccc; text-decoration: none; font-size: 13px; padding: 6px 14px; border-radius: 16px; display: inline-block; transition: background 0.3s, color 0.3s; }
 .site-nav a:hover, .site-nav a.active { background: rgba(124,164,224,0.15); color: #a8ccff; }
 /* Dropdown */
