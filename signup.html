@@ -5,6 +5,17 @@
   <meta name="description" content="Create a LuxAccessories account">
   <title>Sign Up - LuxAccessories</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 16px; margin: 8px 0; }
+    .checkbox-group label { display: flex; align-items: center; gap: 6px; color: #ccc; font-size: 14px; cursor: pointer; }
+    .checkbox-group input[type="checkbox"] { width: 16px; height: 16px; accent-color: #7ca4e0; cursor: pointer; }
+    .single-check { display: flex; align-items: center; gap: 6px; color: #ccc; font-size: 14px; margin: 10px 0; }
+    .single-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: #7ca4e0; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label.field-label { display: block; color: #a8ccff; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -39,37 +50,36 @@
       <form id="signupForm" onsubmit="handleSignup(event)">
         <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
           <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Personal Details</legend>
-          <table class="form-table">
-            <tr><td><label for="fname">First Name *</label></td><td><input type="text" id="fname" required></td></tr>
-            <tr><td><label for="lname">Last Name *</label></td><td><input type="text" id="lname" required></td></tr>
-            <tr><td><label for="email">Email Address *</label></td><td><input type="email" id="email" required></td></tr>
-            <tr><td><label for="phone">Phone Number</label></td><td><input type="tel" id="phone"></td></tr>
-            <tr><td><label for="gender">Gender</label></td><td>
-              <select id="gender"><option value="">Select...</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
-            </td></tr>
-          </table>
+          <div class="form-row">
+            <div class="form-group"><label class="field-label" for="fname">First Name *</label><input type="text" id="fname" required></div>
+            <div class="form-group"><label class="field-label" for="lname">Last Name *</label><input type="text" id="lname" required></div>
+          </div>
+          <div class="form-group"><label class="field-label" for="email">Email Address *</label><input type="email" id="email" required></div>
+          <div class="form-row">
+            <div class="form-group"><label class="field-label" for="phone">Phone Number</label><input type="tel" id="phone"></div>
+            <div class="form-group"><label class="field-label" for="gender">Gender</label><select id="gender"><option value="">Select...</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+          </div>
         </fieldset>
         <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
           <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Account Security</legend>
-          <table class="form-table">
-            <tr><td><label for="pass">Password *</label></td><td><input type="password" id="pass" required></td></tr>
-            <tr><td><label for="cpass">Confirm Password *</label></td><td><input type="password" id="cpass" required></td></tr>
-            <tr><td><label for="dob">Date of Birth</label></td><td><input type="date" id="dob"></td></tr>
-          </table>
+          <div class="form-row">
+            <div class="form-group"><label class="field-label" for="pass">Password *</label><input type="password" id="pass" required></div>
+            <div class="form-group"><label class="field-label" for="cpass">Confirm Password *</label><input type="password" id="cpass" required></div>
+          </div>
+          <div class="form-group"><label class="field-label" for="dob">Date of Birth</label><input type="date" id="dob"></div>
         </fieldset>
         <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
           <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Preferences</legend>
-          <table class="form-table">
-            <tr><td><label>Interests</label></td><td>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Glasses"> Glasses</label>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Watches"> Watches</label>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Rings"> Rings</label>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Chains"> Chains</label>
-              <label style="color:#ccc;font-size:13px;"><input type="checkbox" value="Bags"> Bags</label>
-            </td></tr>
-            <tr><td></td><td><label style="color:#ccc;font-size:13px;"><input type="checkbox"> Subscribe to newsletter</label></td></tr>
-            <tr><td><label>Terms</label></td><td><label style="color:#ccc;font-size:13px;"><input type="checkbox" required> I agree to the <a href="#" style="color:#7ca4e0;">terms & conditions</a></label></td></tr>
-          </table>
+          <label class="field-label" style="color:#a8ccff;font-size:14px;display:block;margin-bottom:8px;">Interest Categories</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" value="Glasses"> Glasses</label>
+            <label><input type="checkbox" value="Watches"> Watches</label>
+            <label><input type="checkbox" value="Rings"> Rings</label>
+            <label><input type="checkbox" value="Chains"> Chains</label>
+            <label><input type="checkbox" value="Bags"> Bags</label>
+          </div>
+          <div class="single-check"><input type="checkbox" id="newsletter"><label for="newsletter">Subscribe to newsletter</label></div>
+          <div class="single-check"><input type="checkbox" id="terms" required><label for="terms">I agree to the <a href="#" style="color:#7ca4e0;">terms & conditions</a></label></div>
         </fieldset>
         <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;">
           <button type="reset" class="btn" style="background:#444;color:#fff;">Clear</button>
