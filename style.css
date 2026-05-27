@@ -1,10 +1,3 @@
-/**
- * LuxAccessories - External Stylesheet
- * Group: DBI211 Assignment 2
- * Members: Jaden Sim Zi Yang (105806517), Juhair Bin Fayze (104398246)
- */
-
-/* ===== RESET & BASE ===== */
 * {
     margin: 0;
     padding: 0;
@@ -43,8 +36,10 @@ body {
 /* Dropdown */
 .dropdown { position: relative; }
 .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: #1a1a2e; border: 1px solid #4a6fa5; border-radius: 12px; min-width: 160px; box-shadow: 0 4px 20px rgba(74,111,165,0.2); z-index: 100; overflow: hidden; }
-.dropdown:hover .dropdown-content { display: block; }
-.dropdown-content a { display: block; padding: 10px 16px; color: #ccc; border-radius: 0; }
+.dropdown:hover .dropdown-content,
+.dropdown.open .dropdown-content { display: block; }
+.dropdown-content li { list-style: none; }
+.dropdown-content a { display: block; padding: 10px 16px; color: #ccc; border-radius: 0; font-size: 13px; }
 .dropdown-content a:hover { background: rgba(124,164,224,0.15); color: #a8ccff; }
 /* MAIN & FOOTER */
 .main-content { flex: 1; padding: 28px; }
@@ -123,4 +118,3 @@ textarea { border-radius: 12px; resize: vertical; min-height: 100px; }
     h1 { font-size: 24px; }
     h2 { font-size: 20px; }
 }
-
