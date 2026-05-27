@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Create a LuxAccessories account">
-  <title>Sign Up - LuxAccessories</title>
+  <meta name="description" content="Feedback for LuxAccessories">
+  <title>Feedback - LuxAccessories</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,57 +29,43 @@
       <li><a href="offers.html">Offers</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="feedback.html" class="active">Feedback</a></li>
     </ul></nav>
   </header>
   <main id="main-content" class="main-content">
     <div class="form-page">
-      <h2>Create Your Account</h2>
-      <p style="color:#aaa;margin-bottom:24px;">Join LuxAccessories for exclusive deals and faster checkout.</p>
-      <form id="signupForm" onsubmit="handleSignup(event)">
+      <h2>Send Us Feedback</h2>
+      <p style="color:#aaa;margin-bottom:24px;">We'd love to hear from you. Let us know how we can improve.</p>
+      <form id="feedbackForm" onsubmit="handleFeedback(event)">
         <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
-          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Personal Details</legend>
+          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Personal Information</legend>
           <table class="form-table">
             <tr><td><label for="fname">First Name *</label></td><td><input type="text" id="fname" required></td></tr>
-            <tr><td><label for="lname">Last Name *</label></td><td><input type="text" id="lname" required></td></tr>
-            <tr><td><label for="email">Email Address *</label></td><td><input type="email" id="email" required></td></tr>
-            <tr><td><label for="phone">Phone Number</label></td><td><input type="tel" id="phone"></td></tr>
-            <tr><td><label for="gender">Gender</label></td><td>
-              <select id="gender"><option value="">Select...</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
-            </td></tr>
-          </table>
-        </fieldset>
-        <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
-          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Account Security</legend>
-          <table class="form-table">
-            <tr><td><label for="pass">Password *</label></td><td><input type="password" id="pass" required></td></tr>
-            <tr><td><label for="cpass">Confirm Password *</label></td><td><input type="password" id="cpass" required></td></tr>
+            <tr><td><label for="email">Email *</label></td><td><input type="email" id="email" required></td></tr>
             <tr><td><label for="dob">Date of Birth</label></td><td><input type="date" id="dob"></td></tr>
           </table>
         </fieldset>
         <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
-          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Preferences</legend>
+          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Feedback Details</legend>
           <table class="form-table">
-            <tr><td><label>Interests</label></td><td>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Glasses"> Glasses</label>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Watches"> Watches</label>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Rings"> Rings</label>
-              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Chains"> Chains</label>
-              <label style="color:#ccc;font-size:13px;"><input type="checkbox" value="Bags"> Bags</label>
+            <tr><td><label for="subject">Subject *</label></td><td>
+              <select id="subject" required><option value="">Select...</option><option>Product</option><option>Order</option><option>Other</option></select>
             </td></tr>
-            <tr><td></td><td><label style="color:#ccc;font-size:13px;"><input type="checkbox"> Subscribe to newsletter</label></td></tr>
-            <tr><td><label>Terms</label></td><td><label style="color:#ccc;font-size:13px;"><input type="checkbox" required> I agree to the <a href="#" style="color:#7ca4e0;">terms & conditions</a></label></td></tr>
+            <tr><td><label>How did you find us?</label></td><td>
+              <label style="color:#ccc;font-size:13px;margin-right:14px;"><input type="radio" name="source" value="Search"> Search</label>
+              <label style="color:#ccc;font-size:13px;"><input type="radio" name="source" value="Social"> Social</label>
+            </td></tr>
+            <tr><td><label for="msg">Message *</label></td><td><textarea id="msg" rows="5" required placeholder="Type your feedback here..."></textarea></td></tr>
           </table>
         </fieldset>
         <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;">
           <button type="reset" class="btn" style="background:#444;color:#fff;">Clear</button>
-          <button type="submit" class="btn">Create Account</button>
+          <button type="submit" class="btn">Submit Feedback</button>
         </div>
       </form>
-      <div id="signupSuccess" style="display:none;margin-top:20px;padding:16px;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);border-radius:12px;text-align:center;color:#4caf50;">
-        Account created successfully! Redirecting to homepage...
+      <div id="feedbackSuccess" style="display:none;margin-top:20px;padding:16px;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);border-radius:12px;text-align:center;color:#4caf50;">
+        Thank you! Your feedback was submitted.
       </div>
-      <p style="text-align:center;margin-top:20px;color:#aaa;">Already have an account? <a href="login.html" style="color:#7ca4e0;">Log in here</a></p>
     </div>
   </main>
   <footer class="site-footer">
@@ -88,10 +74,9 @@
   </footer>
 </div>
 <script>
-function handleSignup(e){
+function handleFeedback(e){
   e.preventDefault();
-  document.getElementById('signupSuccess').style.display='block';
-  setTimeout(function(){ window.location.href='index.html'; },2000);
+  document.getElementById('feedbackSuccess').style.display='block';
 }
 document.querySelectorAll('.dropdown').forEach(function(drop){
   drop.addEventListener('click', function(e){ this.classList.toggle('open'); });
