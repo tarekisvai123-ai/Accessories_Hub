@@ -22,7 +22,8 @@
       <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html" class="active">Home</a></li>
-          <li class="dropdown"><a href="accessories.html">Accessories ▾</a>
+          <li class="dropdown">
+            <a href="accessories.html">Accessories ▾</a>
             <ul class="dropdown-content">
               <li><a href="accessories.html#glasses">Glasses</a></li>
               <li><a href="accessories.html#watches">Watches</a></li>
@@ -38,7 +39,6 @@
         </ul>
       </nav>
     </header>
-
     <main id="main-content" class="main-content">
       <article>
         <section class="hero-banner">
@@ -46,66 +46,58 @@
           <p>Curated sunglasses, watches, rings, chains and bags.</p>
           <a href="offers.html" class="btn">Shop Offers</a>
         </section>
-
         <section>
           <h2>Today's Offers</h2>
           <div class="products-grid">
             <a class="product-card" href="offers.html">
-              <img src="images/glasses1.jpg" alt="Ray-Ban Classic" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518544802925-6c9f3b0d7f7f?auto=format&fit=crop&w=800&q=60'">
+              <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=400&q=60" alt="Ray-Ban Classic">
               <span>Ray-Ban Classic</span>
               <span class="price">USD 129.99</span>
             </a>
-
             <a class="product-card" href="offers.html">
-              <img src="images/watch1.jpg" alt="Classic Watch" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?auto=format&fit=crop&w=800&q=60'">
+              <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=400&q=60" alt="Classic Watch">
               <span>Classic Watch</span>
               <span class="price">USD 279.99</span>
             </a>
-
             <a class="product-card" href="offers.html">
-              <img src="images/ring1.jpg" alt="Gold Ring" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=60'">
+              <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=60" alt="Gold Ring Set">
               <span>Gold Ring Set</span>
               <span class="price">USD 249.99</span>
             </a>
-
             <a class="product-card" href="offers.html">
-              <img src="images/bag1.jpg" alt="Leather Tote" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1520975698515-99b5b2a7d0c8?auto=format&fit=crop&w=800&q=60'">
+              <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=60" alt="Leather Tote">
               <span>Leather Tote</span>
               <span class="price">USD 199.99</span>
             </a>
-
           </div>
         </section>
-
         <section>
           <h2>Shop by Category</h2>
           <div class="categories-grid">
             <a class="category-item" href="accessories.html#glasses">
-              <div class="category-circle" style="background:url('images/glasses1.jpg') center/cover;"></div>
+              <div class="category-circle" style="background:url('https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=200&q=60') center/cover;"></div>
               <span class="category-label">Glasses</span>
             </a>
             <a class="category-item" href="accessories.html#watches">
-              <div class="category-circle" style="background:url('images/watch1.jpg') center/cover;"></div>
+              <div class="category-circle" style="background:url('https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=200&q=60') center/cover;"></div>
               <span class="category-label">Watches</span>
             </a>
             <a class="category-item" href="accessories.html#rings">
-              <div class="category-circle" style="background:url('images/ring1.jpg') center/cover;"></div>
+              <div class="category-circle" style="background:url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=200&q=60') center/cover;"></div>
               <span class="category-label">Rings</span>
             </a>
             <a class="category-item" href="accessories.html#chains">
-              <div class="category-circle" style="background:url('images/chain1.jpg') center/cover;"></div>
+              <div class="category-circle" style="background:url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=200&q=60') center/cover;"></div>
               <span class="category-label">Chains</span>
             </a>
             <a class="category-item" href="accessories.html#bags">
-              <div class="category-circle" style="background:url('images/bag1.jpg') center/cover;"></div>
+              <div class="category-circle" style="background:url('https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=200&q=60') center/cover;"></div>
               <span class="category-label">Bags</span>
             </a>
           </div>
         </section>
-
       </article>
     </main>
-
     <footer class="site-footer">
       <div class="footer-links">
         <a href="index.html">Home</a>
@@ -117,5 +109,16 @@
       <p>&copy; Group_5 | Last updated: 27 May 2026</p>
     </footer>
   </div>
+<script>
+// Dropdown close on click outside
+document.querySelectorAll('.dropdown').forEach(function(drop){
+  drop.addEventListener('click', function(e){ this.classList.toggle('open'); });
+});
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.dropdown')){
+    document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
+  }
+});
+</script>
 </body>
 </html>
