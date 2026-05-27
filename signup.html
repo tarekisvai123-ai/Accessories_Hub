@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Create a LuxAccessories account">
+  <title>Sign Up - LuxAccessories</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <div class="header-top">
+        <a class="logo" href="index.html">LuxAccessories</a>
+        <input class="search-bar" type="search" placeholder="Search accessories..." aria-label="Search accessories">
+        <div class="auth-links">
+          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Log In</a>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="dropdown"><a href="accessories.html">Accessories ▾</a></li>
+          <li><a href="offers.html">Offers</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content" class="main-content">
+      <article>
+        <div class="form-page">
+          <h2>Create Your Account</h2>
+          <p style="text-align:center;color:#aaa;margin-bottom:20px;">Join LuxAccessories for exclusive deals and faster checkout.</p>
+
+          <form id="signupForm" onsubmit="return handleSignup(event)">
+            <fieldset>
+              <legend>Personal Details</legend>
+              <table class="form-table">
+                <tr>
+                  <td><label for="su-fname">First Name *</label></td>
+                  <td><input id="su-fname" name="firstname" type="text" required placeholder="John"></td>
+                </tr>
+                <tr>
+                  <td><label for="su-lname">Last Name *</label></td>
+                  <td><input id="su-lname" name="lastname" type="text" required placeholder="Doe"></td>
+                </tr>
+                <tr>
+                  <td><label for="su-email">Email Address *</label></td>
+                  <td><input id="su-email" name="email" type="email" required placeholder="john@example.com"></td>
+                </tr>
+                <tr>
+                  <td><label for="su-phone">Phone Number</label></td>
+                  <td><input id="su-phone" name="phone" type="tel" placeholder="+61 400 000 000"></td>
+                </tr>
+                <tr>
+                  <td><label>Gender</label></td>
+                  <td>
+                    <div class="radio-group">
+                      <label><input type="radio" name="gender" value="male"> Male</label>
+                      <label><input type="radio" name="gender" value="female"> Female</label>
+                      <label><input type="radio" name="gender" value="other"> Prefer not to say</label>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <fieldset>
+              <legend>Account Security</legend>
+              <table class="form-table">
+                <tr>
+                  <td><label for="su-password">Password *</label></td>
+                  <td><input id="su-password" name="password" type="password" required minlength="8" placeholder="Minimum 8 characters"></td>
+                </tr>
+                <tr>
+                  <td><label for="su-confirm">Confirm Password *</label></td>
+                  <td><input id="su-confirm" name="confirm" type="password" required minlength="8" placeholder="Re-enter password"></td>
+                </tr>
+                <tr>
+                  <td><label for="su-dob">Date of Birth</label></td>
+                  <td><input id="su-dob" name="dob" type="date"></td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <fieldset>
+              <legend>Preferences</legend>
+              <table class="form-table">
+                <tr>
+                  <td><label>Interests</label></td>
+                  <td>
+                    <div class="checkbox-group">
+                      <label><input type="checkbox" name="interest" value="glasses"> Glasses</label>
+                      <label><input type="checkbox" name="interest" value="watches"> Watches</label>
+                      <label><input type="checkbox" name="interest" value="rings"> Rings</label>
+                      <label><input type="checkbox" name="interest" value="chains"> Chains</label>
+                      <label><input type="checkbox" name="interest" value="bags"> Bags</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <div class="checkbox-group">
+                      <label><input type="checkbox" id="newsletter" name="newsletter" checked> Subscribe to newsletter</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="terms">Terms</label></td>
+                  <td><label><input id="terms" type="checkbox" required> I agree to the <a href="terms.html" target="_blank">terms & conditions</a></label></td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <div class="form-buttons">
+              <button type="reset" class="btn btn-secondary">Clear</button>
+              <button type="submit" class="btn">Create Account</button>
+            </div>
+          </form>
+
+          <div id="signup-success" class="success-msg">
+            <p>Account created successfully! Redirecting to homepage...</p>
+          </div>
+
+          <div class="form-link" style="margin-top:12px;">
+            <p>Already have an account? <a href="login.html">Log in here</a></p>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="offers.html">Offers</a>
+        <a href="contact.html">Contact</a>
+        <a href="feedback.html">Feedback</a>
+      </div>
+      <p>&copy; Group_5 | Last updated: 27 May 2026</p>
+    </footer>
+  </div>
+
+<script>
+function handleSignup(e){
+  e.preventDefault();
+  // Basic client-side validation for password match
+  var pw = document.getElementById('su-password').value;
+  var cf = document.getElementById('su-confirm').value;
+  if(pw !== cf){
+    alert('Passwords do not match. Please re-enter.');
+    return false;
+  }
+  // Hide form and show success message
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('signup-success').style.display = 'block';
+  // Redirect after brief delay
+  setTimeout(function(){ window.location.href = 'index.html'; }, 1800);
+  return false;
+}
+</script>
+</body>
+</html>

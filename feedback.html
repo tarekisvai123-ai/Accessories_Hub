@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Feedback for LuxAccessories"><title>Feedback - LuxAccessories</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="site-wrapper">
+  <header class="site-header"><div class="header-top"><a class="logo" href="index.html">LuxAccessories</a><input class="search-bar" type="search" placeholder="Search accessories..."></div><nav class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="accessories.html">Accessories</a></li><li><a href="offers.html">Offers</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="feedback.html" class="active">Feedback</a></li></ul></nav></header>
+
+  <main id="main-content" class="main-content">
+    <article>
+      <div class="form-page">
+        <h2>Send Us Feedback</h2>
+        <form id="feedbackForm" onsubmit="return handleFeedback(event)">
+          <fieldset><legend>Personal Information</legend>
+            <table class="form-table">
+              <tr><td><label for="fb-fname">First Name *</label></td><td><input id="fb-fname" name="firstname" required></td></tr>
+              <tr><td><label for="fb-email">Email *</label></td><td><input id="fb-email" type="email" name="email" required></td></tr>
+              <tr><td><label for="fb-dob">DOB</label></td><td><input id="fb-dob" type="date" name="dob"></td></tr>
+            </table>
+          </fieldset>
+
+          <fieldset><legend>Feedback Details</legend>
+            <table class="form-table">
+              <tr><td><label for="fb-subject">Subject *</label></td><td><select id="fb-subject" required><option value="">Select...</option><option>Product</option><option>Order</option><option>Other</option></select></td></tr>
+              <tr><td><label>How did you find us?</label></td><td><div class="radio-group"><label><input type="radio" name="source" value="search"> Search</label><label><input type="radio" name="source" value="social"> Social</label></div></td></tr>
+              <tr><td><label for="fb-message">Message *</label></td><td><textarea id="fb-message" required></textarea></td></tr>
+            </table>
+          </fieldset>
+
+          <div class="form-buttons"><button type="reset" class="btn btn-secondary">Clear</button><button type="submit" class="btn">Submit Feedback</button></div>
+        </form>
+
+        <div id="feedback-success" class="success-msg"><p>Thank you! Your feedback was submitted.</p></div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer"><div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div><p>&copy; Group_5 | Last updated: 27 May 2026</p></footer>
+</div>
+
+<script>
+function handleFeedback(e){
+  e.preventDefault();
+  document.getElementById('feedbackForm').style.display='none';
+  document.getElementById('feedback-success').style.display='block';
+  return false;
+}
+</script>
+</body>
+</html>
