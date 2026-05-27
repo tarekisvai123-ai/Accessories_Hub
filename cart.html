@@ -1,37 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Your cart - LuxAccessories">
-  <title>Cart - LuxAccessories</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - TechWorld</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .cart-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .cart-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        .cart-empty h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .cart-empty a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: #4a90d9;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .cart-items {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            gap: 15px;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f0f0f0;
+        }
+        .cart-item-details {
+            flex: 1;
+        }
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+        }
+        .cart-item-price {
+            color: #4a90d9;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cart-item-qty button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .cart-item-qty button:hover {
+            background: #e0e0e0;
+        }
+        .cart-item-qty span {
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .cart-summary {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-align: right;
+        }
+        .cart-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .checkout-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 14px 40px;
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .checkout-btn:hover {
+            background: #219a52;
+        }
+        .clear-btn {
+            margin-top: 15px;
+            margin-right: 10px;
+            padding: 14px 30px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .clear-btn:hover {
+            background: #c0392b;
+        }
+    </style>
 </head>
 <body>
-  <a href="#cart-root" class="skip-link">Skip to cart</a>
-  <div class="site-wrapper">
-    <header class="site-header">
-      <div class="header-top">
-        <a class="logo" href="index.html">LuxAccessories</a>
-        <input class="search-bar" type="search" placeholder="Search accessories...">
-        <div class="auth-links"><a href="signup.html">Sign Up</a><a href="login.html">Log In</a></div>
-      </div>
-      <nav class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="accessories.html">Accessories</a></li><li><a href="offers.html">Offers</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="feedback.html">Feedback</a></li></ul></nav>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">TechWorld</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main id="main-content" class="main-content">
-      <article>
-        <h1>Your Cart</h1>
-        <div id="cart-root" aria-live="polite"></div>
-      </article>
-    </main>
+    <div class="cart-container">
+        <h1 class="cart-title">Your Shopping Cart</h1>
+        <div id="cart-content">
+            <!-- Populated by JS -->
+        </div>
+    </div>
 
-    <footer class="site-footer">
-      <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div>
-      <p>&copy; Group_5 | Last updated: 27 May 2026</p>
-    </footer>
-  </div>
+    <script>
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        }
 
-  <script src="cart.js"></script>
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function renderCart() {
+            const cart = getCart();
+            const container = document.getElementById('cart-content');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="cart-empty">
+                        <h2>Your cart is empty</h2>
+                        <p>Browse our products and add items to your cart.</p>
+                        <a href="products.html">Shop Now</a>
+                    </div>`;
+                return;
+            }
+
+            let total = 0;
+            let itemsHTML = '<div class="cart-items">';
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                itemsHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image || 'https://placehold.co/80x80'}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                        </div>
+                        <div class="cart-item-qty">
+                            <button onclick="changeQty(${index}, -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeItem(${index})">✕</button>
+                    </div>`;
+            });
+            itemsHTML += '</div>';
+
+            itemsHTML += `
+                <div class="cart-summary">
+                    <div class="cart-total">Total: $${total.toFixed(2)}</div>
+                    <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+                    <button class="checkout-btn" onclick="alert('Thank you for your order!')">Checkout</button>
+                </div>`;
+
+            container.innerHTML = itemsHTML;
+        }
+
+        function changeQty(index, delta) {
+            const cart = getCart();
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            saveCart(cart);
+            renderCart();
+        }
+
+        function removeItem(index) {
+            const cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+            renderCart();
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            renderCart();
+        }
+
+        renderCart();
+    </script>
 </body>
 </html>
