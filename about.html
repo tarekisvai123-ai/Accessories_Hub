@@ -15,41 +15,51 @@
       <input class="search-bar" type="search" placeholder="Search accessories...">
       <div class="auth-links"><a href="signup.html">Sign Up</a><a href="login.html">Log In</a></div>
     </div>
-    <nav class="site-nav"><ul><li><a href="index.html">Home</a></li><li class="dropdown"><a href="accessories.html">Accessories</a></li><li><a href="offers.html">Offers</a></li><li><a href="about.html" class="active">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="feedback.html">Feedback</a></li></ul></nav>
+    <nav class="site-nav"><ul>
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown"><a href="accessories.html">Accessories ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="accessories.html#glasses">Glasses</a></li>
+          <li><a href="accessories.html#watches">Watches</a></li>
+          <li><a href="accessories.html#rings">Rings</a></li>
+          <li><a href="accessories.html#chains">Chains</a></li>
+          <li><a href="accessories.html#bags">Bags</a></li>
+        </ul>
+      </li>
+      <li><a href="offers.html">Offers</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+    </ul></nav>
   </header>
-
   <main id="main-content" class="main-content">
     <article class="about-content">
       <h1>About LuxAccessories</h1>
       <p>Welcome to LuxAccessories — a student project for DBI211. We curate premium accessories for style and function.</p>
-
       <section style="margin-top:30px;">
         <h2>Meet Our Team</h2>
         <p>This website was developed as a group project for DBI211 Web Technologies.</p>
         <div class="member-grid">
           <div class="member-card">
-            <img src="images/jaden.jpg" alt="Jaden Sim Zi Yang">
-            <h3>Jaden Sim Zi Yang</h3>
-            <p>Student ID: 105806517</p>
-            <p style="font-size:12px;color:#888;margin-top:4px;">Lead: Homepage, Offers, styling.</p>
-          </div>
-
-          <div class="member-card">
-            <img src="images/juhair.jpg" alt="Juhair Bin Fayze">
+            <img src="juhair.jpg" alt="Juhair Bin Fayze">
             <h3>Juhair Bin Fayze</h3>
             <p>Student ID: 104398246</p>
             <p style="font-size:12px;color:#888;margin-top:4px;">Lead: Accessories, product images, content.</p>
           </div>
-
           <div class="member-card">
-            <img src="images/xikai.jpg" alt="Sze XiKai">
+            <img src="xikai.jpg" alt="Sze XiKai">
             <h3>Sze XiKai</h3>
             <p>Student ID: 105804265</p>
             <p style="font-size:12px;color:#888;margin-top:4px;">Support: Photos, background assets.</p>
           </div>
+          <div class="member-card">
+            <img src="jaden.jpg" alt="Jaden Sim Zi Yang">
+            <h3>Jaden Sim Zi Yang</h3>
+            <p>Student ID: 105806517</p>
+            <p style="font-size:12px;color:#888;margin-top:4px;">Lead: Homepage, Offers, styling.</p>
+          </div>
         </div>
       </section>
-
       <section style="margin-top:30px;">
         <h2>Our Product Range</h2>
         <table>
@@ -64,11 +74,22 @@
           </tbody>
         </table>
       </section>
-
     </article>
   </main>
-
-  <footer class="site-footer"><div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div><p>&copy; Group_5 | Last updated: 27 May 2026</p></footer>
+  <footer class="site-footer">
+    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div>
+    <p>&copy; Group_5 | Last updated: 27 May 2026</p>
+  </footer>
 </div>
+<script>
+document.querySelectorAll('.dropdown').forEach(function(drop){
+  drop.addEventListener('click', function(e){ this.classList.toggle('open'); });
+});
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.dropdown')){
+    document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
+  }
+});
+</script>
 </body>
 </html>
