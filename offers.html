@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Special offers on LuxAccessories">
-  <title>Offers - LuxAccessories</title>
+  <meta name="description" content="Create a LuxAccessories account">
+  <title>Sign Up - LuxAccessories</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,60 +26,61 @@
           <li><a href="accessories.html#bags">Bags</a></li>
         </ul>
       </li>
-      <li><a href="offers.html" class="active">Offers</a></li>
+      <li><a href="offers.html">Offers</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="feedback.html">Feedback</a></li>
     </ul></nav>
   </header>
   <main id="main-content" class="main-content">
-    <article>
-      <section class="hero-banner">
-        <h1>Special Offers</h1>
-        <p>Limited-time deals — grab them while stocks last.</p>
-      </section>
-      <section>
-        <h2>This Week's Deals</h2>
-        <div class="products-grid">
-          <a class="product-card" href="accessories.html#glasses">
-            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=400&q=60" alt="Ray-Ban Aviator">
-            <span>Ray-Ban Aviator</span>
-            <span class="old-price">USD 159.99</span>
-            <span class="price">USD 99.99</span>
-          </a>
-          <a class="product-card" href="accessories.html#watches">
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=60" alt="Casio G-Shock">
-            <span>Casio G-Shock</span>
-            <span class="old-price">USD 199.99</span>
-            <span class="price">USD 149.99</span>
-          </a>
-          <a class="product-card" href="accessories.html#rings">
-            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=60" alt="Diamond Ring">
-            <span>Diamond Ring</span>
-            <span class="old-price">USD 549.99</span>
-            <span class="price">USD 399.99</span>
-          </a>
-          <a class="product-card" href="accessories.html#bags">
-            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=60" alt="Coach Bag">
-            <span>Coach Bag</span>
-            <span class="old-price">USD 349.99</span>
-            <span class="price">USD 249.99</span>
-          </a>
+    <div class="form-page">
+      <h2>Create Your Account</h2>
+      <p style="color:#aaa;margin-bottom:24px;">Join LuxAccessories for exclusive deals and faster checkout.</p>
+      <form id="signupForm" onsubmit="handleSignup(event)">
+        <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
+          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Personal Details</legend>
+          <table class="form-table">
+            <tr><td><label for="fname">First Name *</label></td><td><input type="text" id="fname" required></td></tr>
+            <tr><td><label for="lname">Last Name *</label></td><td><input type="text" id="lname" required></td></tr>
+            <tr><td><label for="email">Email Address *</label></td><td><input type="email" id="email" required></td></tr>
+            <tr><td><label for="phone">Phone Number</label></td><td><input type="tel" id="phone"></td></tr>
+            <tr><td><label for="gender">Gender</label></td><td>
+              <select id="gender"><option value="">Select...</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
+            </td></tr>
+          </table>
+        </fieldset>
+        <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
+          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Account Security</legend>
+          <table class="form-table">
+            <tr><td><label for="pass">Password *</label></td><td><input type="password" id="pass" required></td></tr>
+            <tr><td><label for="cpass">Confirm Password *</label></td><td><input type="password" id="cpass" required></td></tr>
+            <tr><td><label for="dob">Date of Birth</label></td><td><input type="date" id="dob"></td></tr>
+          </table>
+        </fieldset>
+        <fieldset style="border:1px solid rgba(74,111,165,0.3);border-radius:12px;padding:20px;margin-bottom:20px;">
+          <legend style="color:#a8ccff;font-weight:600;padding:0 8px;">Preferences</legend>
+          <table class="form-table">
+            <tr><td><label>Interests</label></td><td>
+              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Glasses"> Glasses</label>
+              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Watches"> Watches</label>
+              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Rings"> Rings</label>
+              <label style="color:#ccc;font-size:13px;margin-right:10px;"><input type="checkbox" value="Chains"> Chains</label>
+              <label style="color:#ccc;font-size:13px;"><input type="checkbox" value="Bags"> Bags</label>
+            </td></tr>
+            <tr><td></td><td><label style="color:#ccc;font-size:13px;"><input type="checkbox"> Subscribe to newsletter</label></td></tr>
+            <tr><td><label>Terms</label></td><td><label style="color:#ccc;font-size:13px;"><input type="checkbox" required> I agree to the <a href="#" style="color:#7ca4e0;">terms & conditions</a></label></td></tr>
+          </table>
+        </fieldset>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;">
+          <button type="reset" class="btn" style="background:#444;color:#fff;">Clear</button>
+          <button type="submit" class="btn">Create Account</button>
         </div>
-      </section>
-      <section style="margin-top:30px;">
-        <h2>Offer Details</h2>
-        <table>
-          <caption>Current Promotions</caption>
-          <thead><tr><th>Promotion</th><th>Discount</th><th>Valid Until</th><th>Code</th></tr></thead>
-          <tbody>
-            <tr><td>Welcome Offer</td><td>15% off first order</td><td>31 Dec 2026</td><td>WELCOME15</td></tr>
-            <tr><td>Bundle Deal</td><td>Buy 2 Get 10% off</td><td>Ongoing</td><td>BUNDLE10</td></tr>
-            <tr><td>Free Shipping</td><td>Orders over USD 50</td><td>Ongoing</td><td>FREESHIP</td></tr>
-          </tbody>
-        </table>
-      </section>
-    </article>
+      </form>
+      <div id="signupSuccess" style="display:none;margin-top:20px;padding:16px;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);border-radius:12px;text-align:center;color:#4caf50;">
+        Account created successfully! Redirecting to homepage...
+      </div>
+      <p style="text-align:center;margin-top:20px;color:#aaa;">Already have an account? <a href="login.html" style="color:#7ca4e0;">Log in here</a></p>
+    </div>
   </main>
   <footer class="site-footer">
     <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="offers.html">Offers</a><a href="contact.html">Contact</a><a href="feedback.html">Feedback</a></div>
@@ -87,6 +88,11 @@
   </footer>
 </div>
 <script>
+function handleSignup(e){
+  e.preventDefault();
+  document.getElementById('signupSuccess').style.display='block';
+  setTimeout(function(){ window.location.href='index.html'; },2000);
+}
 document.querySelectorAll('.dropdown').forEach(function(drop){
   drop.addEventListener('click', function(e){ this.classList.toggle('open'); });
 });
